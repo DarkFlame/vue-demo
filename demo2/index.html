@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+
+<body>
+<div id="app" v-bind:id="'list'+id" v-bind:disabled="!isShow">
+    {{ !message ? showMessage : reversedMessage }}
+    <p>{{reverseMessageMethod()}}</p>
+</div>
+<div id="watch-example">
+    <p>
+        Ask a yes/no question:
+        <input v-model="question">
+    </p>
+    <p>{{ answer }}</p>
+</div>
+
+<script src="../dist.vue.js"></script>
+<script src="../dist.lodash.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
