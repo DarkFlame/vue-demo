@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .fade-enter-active,.fade-leave-active{
+        transition:opacity .5s ease;
+    }
+    .fade-enter,.fade-leave-active{
+        opacity: 0;
+    }
+    .child-view {
+        /*position: absolute;*/
+        transition: all .5s cubic-bezier(.55,0,.1,1);
+    }
+    .slide-left-enter, .slide-right-leave-active {
+        opacity: 0;
+        -webkit-transform: translate(30px, 0);
+        transform: translate(30px, 0);
+    }
+    .slide-left-leave-active, .slide-right-enter {
+        opacity: 0;
+        -webkit-transform: translate(-30px, 0);
+        transform: translate(-30px, 0);
+    }
+</style>
+<body>
+<div id="app">
+    <h1>Hello App!</h1>
+    <p>
+        <!-- 使用 router-link 组件来导航. -->
+        <!-- 通过传入 `to` 属性指定链接. -->
+        <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+        <!--<router-link to="/foo">Go to Foo</router-link>-->
+        <!--<router-link to="/bar">Go to Bar</router-link>-->
+        <router-link to="/user/bar/userProfile">login for bar</router-link>
+        <router-link to="/user/sunyue/userProfileAlias?page=1&siez=10">login for sunyue</router-link>
+        <router-link to="/user/test/userPostAlias?page=2&siez=20">login for sunyue</router-link>
+        <router-link :to="{name:'userPost',params:{testId:1,id:'手动填写'}}">UsertoLink</router-link>
+    </p>
+    <!-- 路由出口 -->
+    <!-- 路由匹配到的组件将渲染在这里 -->
+    <transition  name="fade" mode="out-in">
+        <router-view></router-view>
+    </transition>
+
+    <router-view name="a"></router-view>
+    <router-view name="b"></router-view>
+</div>
+
+<script src="../dist.vue.js"></script>
+<script src="../dist.vue-router.js"></script>
+<script src="../dist.lodash.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
