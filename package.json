@@ -1,0 +1,8 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "dependencies": {
+    "vue": "^2.1.10",
+    "vue-server-renderer": "^2.1.10"
+  }
+}
