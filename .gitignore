@@ -7,4 +7,5 @@
 *.iml
 out
 gen
+npm-debug*
 node_modules

@@ -9,15 +9,49 @@ const UserPost = {template: '<h1>UserPost</h1>'}
 const NotFoundComponent = {template: '<h1>notFound</h1>'}
 const User = {
     template: `
-<div>
-    {{$route.params.id}}
-    <transition :name="transitionName" mode="out-in">
-        <router-view class="child-view"></router-view>
-    </transition>
-    <router-view name="d"></router-view>
-</div>`,
+        <div>
+            {{$route.params.id}}
+            
+            <h1 v-for="item of data">{{item.id}}</h1>
+            <transition :name="transitionName" mode="out-in">
+                <keep-alive>
+                    <router-view class="child-view" id="test"></router-view>
+                </keep-alive>
+            </transition>
+            <div class="loading" v-if="loading">
+              Loading...
+            </div>
+            
+            <router-view name="d"></router-view>
+        </div>
+`,
+    data: function () {
+        return {
+            transitionName: '',
+            loading: true,
+            data: []
+        }
+    },
+    created(){
+        this.fetchData()
+    },
+    methods: {
+        fetchData () {
+            this.loading = true;
+            setTimeout(() => {
+                this.loading = false;
+                return this.data =
+                     [{
+                        id: 1,
+                        name: 'lawliet test'
+                    }]
+            },1000)
+        }
+    },
     watch: {
         '$route' (to,from) {
+            console.log('组件内路由change')
+            this.fetchData()
             const toDepth = to.path.split('/').length
             const fromDepth = from.path.split('/').length
             this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
@@ -109,8 +143,9 @@ const routes = [
 // 3. 创建 router 实例，然后传 `routes` 配置
 // 你还可以传别的配置参数, 不过先这么简单着吧。
 const router = new VueRouter({
-    // mode: 'history',
-    mode: 'hash',
+    mode: 'history',
+    // mode: 'hash',
+    base:'app',
     routes // （缩写）相当于 routes: routes
 })
 
