@@ -6,7 +6,8 @@
 		["transform-runtime", {
 			"polyfill": true,
 			"regenerator": true
-		}]
+		}],
+		["transform-object-rest-spread", { "useBuiltIns": true }]
 	],
 	"env": {
 		"production": {

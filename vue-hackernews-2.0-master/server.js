@@ -79,7 +79,6 @@ app.get('*', (req, res) => {
   })
 
   renderStream.on('data', chunk => {
-    console.log(chunk)
     res.write(chunk)
   })
 

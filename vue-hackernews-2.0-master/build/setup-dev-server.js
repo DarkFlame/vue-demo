@@ -24,7 +24,8 @@ module.exports = function setupDevServer(app,opts) {
         headers: {"X-Custom-Header": "yes"},
     })
     app.use(devMiddleware)
-    clientCompiler.plugin('done',() => {
+
+    clientCompiler.plugin('done',(stat) => {
         const fs = devMiddleware.fileSystem
         const filePath = path.join(clientConfig.output.path,'index.html')
         if (fs.existsSync(filePath)) {

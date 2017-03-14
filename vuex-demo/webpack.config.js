@@ -1,57 +1,52 @@
 const path = require('path')
-const vueConfig = require('./vue-loader.config')
-
+let ChunkManifestPlugin = require("chunk-manifest-webpack-plugin");
+var WebpackChunkHash = require("webpack-chunk-hash");
+var webpack = require("webpack");
+var HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
-  devtool: '#source-map',
-  entry: {
-    app: './src/client-entry.js',
-    vendor: [
-      'es6-promise',
-      'firebase/app',
-      'firebase/database',
-      'vue',
-      'vue-router',
-      'vuex',
-      'vuex-router-sync'
+    devtool: '#source-map',
+    entry: {
+        app: ['babel-polyfill','./main.js'],
+        vendor: [
+            'vue',
+            'vue-router',
+            'vuex',
+
+        ]
+    },
+    output: {
+        path: path.resolve(__dirname,'./dist'),
+        // publicPath: '',
+        filename: '[name].[hash].js'
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            }
+        ]
+    },
+    performance: {
+        // hints: process.env.NODE_ENV === 'production' ? 'warning' : false
+    },
+    plugins: [
+
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname,'./index.html'),
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: ["vendor","manifest"],
+            minChunks: Infinity,
+        }),
+        new ChunkManifestPlugin({
+            filename: "chunk-manifest.json",
+            manifestVariable: "webpackManifest"
+        })
     ]
-  },
-  output: {
-    path: path.resolve(__dirname, '../dist'),
-    publicPath: '/dist/',
-    filename: '[name].[chunkhash].js'
-  },
-  resolve: {
-    alias: {
-      'public': path.resolve(__dirname, '../public')
-    }
-  },
-  module: {
-    noParse: /es6-promise\.js$/, // avoid webpack shimming process
-    rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: vueConfig
-      },
-      {
-        test: /\.js$/,
-        loader: 'buble-loader',
-        exclude: /node_modules/,
-        options: {
-          objectAssign: 'Object.assign'
-        }
-      },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: '[name].[ext]?[hash]'
-        }
-      }
-    ]
-  },
-  performance: {
-    hints: process.env.NODE_ENV === 'production' ? 'warning' : false
-  }
 }
