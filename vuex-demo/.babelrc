@@ -1,0 +1,16 @@
+{
+	"plugins": [
+		"transform-async-to-generator", ["transform-es2015-modules-commonjs", {
+			"allowTopLevelThis": true
+		}],
+		["transform-runtime", {
+			"polyfill": true,
+			"regenerator": true
+		}]
+	],
+	"env": {
+		"production": {
+			"plugins": ["transform-remove-console"]
+		}
+	}
+}
