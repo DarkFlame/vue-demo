@@ -1,29 +1,19 @@
 <template>
-    <div>
-        <header-component/>
-        <div>this is template body</div>
-        <other-component/>
+    <div id="app">
+        <h1>Shopping Cart Example</h1>
+        <hr>
+        <h2>Products</h2>
+        <product-list></product-list>
+        <hr>
+        <cart></cart>
     </div>
 </template>
-<style>
-    body{
-        background-color:#ff0000;
-    }
 
-</style>
 <script>
-    import HeaderComponent from './components/header.vue'
-    import OtherComponent from './components/other.vue'
-    export default{
-        data(){
-            return{
-                msg:'hello vue'
-            }
-        },
-        components:{
-            'other-component':OtherComponent,
-            HeaderComponent,
-        }
-    }
+import ProductList from './ProductList.vue'
+import Cart from './Cart.vue'
 
+export default {
+  components: { ProductList, Cart }
+}
 </script>

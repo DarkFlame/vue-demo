@@ -10,3 +10,4 @@ gen
 npm-debug*
 node_modules
 dist
+*.csv
