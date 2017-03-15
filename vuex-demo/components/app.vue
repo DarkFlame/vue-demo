@@ -1,8 +1,9 @@
 <template>
-    <div id="app">
+    <div id="app1">
         <h1>Shopping Cart Example</h1>
         <hr>
         <h2>Products</h2>
+        <h2></h2>
         <product-list></product-list>
         <hr>
         <cart></cart>

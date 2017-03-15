@@ -1,8 +1,8 @@
 const path = require('path')
-let ChunkManifestPlugin = require("chunk-manifest-webpack-plugin");
-var WebpackChunkHash = require("webpack-chunk-hash");
-var webpack = require("webpack");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
+let ChunkManifestPlugin = require("chunk-manifest-webpack-plugin")
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
+let webpack = require("webpack") 
+let HtmlWebpackPlugin = require("html-webpack-plugin") 
 module.exports = {
     devtool: '#source-map',
     entry: {
@@ -11,7 +11,6 @@ module.exports = {
             'vue',
             'vue-router',
             'vuex',
-
         ]
     },
     output: {
@@ -28,7 +27,10 @@ module.exports = {
             },
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
+                loader: 'vue-loader',
+                options: {
+                    loaders:'vue-style-loader!css-loader!'
+                }
             }
         ]
     },
@@ -36,7 +38,6 @@ module.exports = {
         // hints: process.env.NODE_ENV === 'production' ? 'warning' : false
     },
     plugins: [
-
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname,'./index.html'),
         }),
@@ -46,7 +47,7 @@ module.exports = {
         }),
         new ChunkManifestPlugin({
             filename: "chunk-manifest.json",
-            manifestVariable: "webpackManifest"
+            manifestletiable: "webpackManifest"
         })
     ]
 }
