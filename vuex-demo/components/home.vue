@@ -8,6 +8,7 @@
         background-color:green;
     }
 </style>
+
 <script>
     import {routerView,routerLink} from 'vue-router'
 

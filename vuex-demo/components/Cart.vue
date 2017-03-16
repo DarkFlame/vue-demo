@@ -12,8 +12,15 @@
     <p v-show="checkoutStatus">Checkout {{ checkoutStatus }}.</p>
   </div>
 </template>
-
+<style lang="scss">
+    body{
+      & > div{
+        height:100px;
+      }
+    }
+</style>
 <script>
+
 import { mapGetters } from 'vuex'
 export default {
   computed: {

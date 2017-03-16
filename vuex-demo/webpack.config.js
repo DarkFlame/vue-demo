@@ -1,8 +1,16 @@
 const path = require('path')
 let ChunkManifestPlugin = require("chunk-manifest-webpack-plugin")
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
-let webpack = require("webpack") 
-let HtmlWebpackPlugin = require("html-webpack-plugin") 
+let webpack = require("webpack")
+let HtmlWebpackPlugin = require("html-webpack-plugin")
+let cssExtract = new ExtractTextPlugin({
+    filename: 'css/main.css',
+    allChunks: true
+})
+let docsExtract = new ExtractTextPlugin({
+    filename: 'api.md',
+    allChunks: true
+})
 module.exports = {
     devtool: 'inline-source-map',
     entry: {
@@ -11,24 +19,15 @@ module.exports = {
             'vue',
             'vue-router',
             'vuex'
-        ],
-        // hot:['webpack-dev-server/client']
+        ]
+
     },
     output: {
         path: path.resolve(__dirname,'./dist'),
         // publicPath: '',
         filename: '[name].[hash].js'
     },
-    // devServer: {
-    //     hot: true,
-    //     // enable HMR on the server
-    //
-    //     contentBase: resolve(__dirname,'dist'),
-    //     // match the output path
-    //
-    //     publicPath: '/'
-    //     // match the output `publicPath`
-    // },
+
     module: {
         rules: [
             {
@@ -40,7 +39,23 @@ module.exports = {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
-                    loaders:'vue-style-loader!css-loader!'
+                    loaders: {
+                        scss: cssExtract.extract({
+                            use: 'css-loader!sass-loader',
+                            fallback: 'vue-style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
+                        }),
+                        less: cssExtract.extract({
+                            use: 'css-loader!less-loader',
+                            fallback: 'vue-style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
+                        }),
+                        css: cssExtract.extract({
+                            use: 'css-loader',
+                            fallback: 'vue-style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
+                        }),
+                        docs: docsExtract.extract({
+                            use: 'raw-loader'
+                        }),
+                    }
                 }
             }
         ]
@@ -52,6 +67,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname,'./index.html'),
         }),
+        cssExtract,
+        docsExtract,
         new webpack.optimize.CommonsChunkPlugin({
             name: ["vendor","manifest"],
             minChunks: Infinity,

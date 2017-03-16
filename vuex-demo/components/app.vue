@@ -1,3 +1,4 @@
+
 <template>
     <div id="app1">
         <router-link to="/login">{{mymsg}}</router-link>
