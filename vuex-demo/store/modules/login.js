@@ -1,6 +1,6 @@
 import * as type from '../mutation-types'
 export const state = {
-    msg: 'init'
+    msg: 'initInput1'
 }
 export const getters = {
     msg(state) {
@@ -19,6 +19,8 @@ export const mutations = {
         state.msg = payload
     }
 }
+
+
 export default {
     state,
     getters,

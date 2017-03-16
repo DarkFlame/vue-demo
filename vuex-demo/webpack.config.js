@@ -4,20 +4,31 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin")
 let webpack = require("webpack") 
 let HtmlWebpackPlugin = require("html-webpack-plugin") 
 module.exports = {
-    devtool: '#source-map',
+    devtool: 'inline-source-map',
     entry: {
         app: ['babel-polyfill','./main.js'],
         vendor: [
             'vue',
             'vue-router',
-            'vuex',
-        ]
+            'vuex'
+        ],
+        // hot:['webpack-dev-server/client']
     },
     output: {
         path: path.resolve(__dirname,'./dist'),
         // publicPath: '',
         filename: '[name].[hash].js'
     },
+    // devServer: {
+    //     hot: true,
+    //     // enable HMR on the server
+    //
+    //     contentBase: resolve(__dirname,'dist'),
+    //     // match the output path
+    //
+    //     publicPath: '/'
+    //     // match the output `publicPath`
+    // },
     module: {
         rules: [
             {
@@ -45,6 +56,8 @@ module.exports = {
             name: ["vendor","manifest"],
             minChunks: Infinity,
         }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
         new ChunkManifestPlugin({
             filename: "chunk-manifest.json",
             manifestletiable: "webpackManifest"

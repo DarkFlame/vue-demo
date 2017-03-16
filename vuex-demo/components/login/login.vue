@@ -19,7 +19,6 @@ import {routerView,routerLink} from 'vue-router'
                 get(){
                     return this.$store.state.login.msg
                 },
-
                 set(val){
                     this.$store.dispatch('setMsg',val)
                 }

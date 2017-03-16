@@ -11,8 +11,8 @@ Vue.filter('currency', currency)
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-    mode: 'history',
-    // mode: 'hash',
+    // mode: 'history',
+    mode: 'hash',
     base:'app',
     routes // （缩写）相当于 routes: routes
 })
