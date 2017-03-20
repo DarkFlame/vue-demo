@@ -9,11 +9,13 @@
                 Add to cart
             </button>
         </li>
-        <li><button
+        <li>
+            <button
 
-                @click="test(1)">
-            test
-        </button></li>
+                    @click="test(1)">
+                test
+            </button>
+        </li>
     </ul>
 </template>
 
@@ -34,5 +36,6 @@ export default {
     this.$store.dispatch('getAllProducts')
   }
 }
+
 
 </script>

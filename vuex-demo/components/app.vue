@@ -1,4 +1,3 @@
-
 <template>
     <div id="app1">
         <router-link to="/login">{{mymsg}}</router-link>
@@ -25,10 +24,11 @@ export default {
         },
         computed:{
             ...mapGetters({
-                mymsg : "msg"
+                mymsg : 'msg'
             })
         },
        components: { ProductList, Cart }
 }
+
 
 </script>

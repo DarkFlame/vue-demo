@@ -7,13 +7,14 @@
     body{
         background-color:green;
     }
+
 </style>
 
 <script>
-    import {routerView,routerLink} from 'vue-router'
-
+import {routerView} from 'vue-router'
     export default{
     }
+
 
 
 </script>
