@@ -5,6 +5,8 @@ import * as getters from './getters'
 import mutations from './mutations'
 import cart from './modules/cart'
 import login from './modules/login'
+import table from './modules/table'
+import segment from './modules/segment'
 import products from './modules/products'
 import createLogger from 'vuex/dist/logger'
 import myPlugin from './plugin'
@@ -17,7 +19,9 @@ const store =  new Vuex.Store({
     modules: {
         cart,
         products,
-        login
+        login,
+        segment,
+        table
     },
     mutations,
     strict: debug,
@@ -26,7 +30,6 @@ const store =  new Vuex.Store({
         }),myPlugin()] : []
 })
 
-console.log(module.hot)
 if (module.hot) {
     // 使 actions 和 mutations 成为可热重载模块
     module.hot.accept(['./mutations', './modules/login'], () => {

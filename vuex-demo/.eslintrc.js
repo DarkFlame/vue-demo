@@ -14,10 +14,9 @@ module.exports = {
     },
     "plugins": ['html'],
     "rules": {
-        // "indent": [
-        //     "error",
-        //     "tab"
-        // ],
+        "no-console": [
+            "warn"
+        ],
         "no-unused-vars":[
             "warn"
         ],
