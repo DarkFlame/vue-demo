@@ -6,8 +6,8 @@
             el-form-item(label="密码")
                 el-input(v-model="password",type="password", placeholder="密码", icon="search")
             el-form-item
-                el-button(@click="regist") 注册
-        el-button(v-if="isShowSelectedUserList",@click="removeUserBySelectKey(selectedUserList)") 批量删除
+                el-button(@click="regist",type="info") 注册
+        el-button(v-if="isShowSelectedUserList",type="info",@click="removeUserBySelectKey(selectedUserList)") 批量删除
         el-table(:data="userList", stripe, border, @selection-change="handleSelectionChange")
             el-table-column(type="selection", width="60")
             el-table-column(prop="key", label="key", width="300")
@@ -82,6 +82,7 @@
                     username: this.username,
                     password: this.password
                 }).then((res) => {
+                    console.log(res)
                     this.initUserTableData()
                 })
             }

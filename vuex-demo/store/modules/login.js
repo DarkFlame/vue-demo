@@ -3,7 +3,7 @@ import {usersRef} from '../../models'
 export const state = {
     username: 'initInput1',
     password: '',
-    selectedUserList:[],
+    selectedUserList: [],
     userList: []
 }
 export const getters = {
@@ -34,18 +34,19 @@ export const actions = {
     login({commit},{username,password}){
         return usersRef.push({
             username,
-            password
+            password,
+            createdAt: new Date().toJSON()
         })
     },
     removeUserByKey({commit},{key}){
         return usersRef.child(key).remove()
     },
     removeUserBySelectKey({commit,dispatch},removeUserBySelectKey){
-        let updates = {};
-        for(let {key} of removeUserBySelectKey){
-            updates[key] = null;
+        let updates = {}
+        for (let {key} of removeUserBySelectKey) {
+            updates[key] = null
         }
-        usersRef.update(updates).then(res=>{
+        usersRef.update(updates).then(() => {
             dispatch('getAllUser')
         })
     },
@@ -53,6 +54,9 @@ export const actions = {
         usersRef.limitToLast(100).once('value').then((res) => {
             commit(type.LOGIN_SET_USERLIST,res.val())
         });
+    },
+    getTableDisplayData({commit}){
+        console.log(111)
     }
 }
 

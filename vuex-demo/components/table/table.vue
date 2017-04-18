@@ -1,30 +1,55 @@
 <template>
     <div>
-        <router-link to="/">返回</router-link>
         <el-table
                 :data="tableData"
                 stripe
                 style="width: 100%">
+
             <el-table-column
-                    prop="date"
+                    prop="password"
+                    width="180"
+                    type="expand"
+                    label="地址">
+                <template scope="props">
+                    <el-form label-position="left" inline class="demo-table-expand">
+                        <el-form-item label="商品名称">
+                            <span>{{ props.row.username }}</span>
+                        </el-form-item>
+                        <el-form-item label="所属店铺">
+                            <span>{{ props.row.username }}</span>
+                        </el-form-item>
+                    </el-form>
+                </template>
+            </el-table-column>
+
+            <el-table-column
                     label="日期"
-                    width="180">
+                    width="180"
+                    prop="createdAt"
+                    :formatter="formatterDate">
             </el-table-column>
             <el-table-column
-                    prop="name"
+                    prop="username"
                     label="姓名"
                     width="180">
             </el-table-column>
+
             <el-table-column
-                    prop="address"
-                    label="地址">
+                    width="180"
+                    label="自定义">
+                <template scope="scope">
+                    <el-popover trigger="hover" placement="top">
+                        <p>姓名: {{ scope.row.username }}</p>
+                        <div slot="reference" class="name-wrapper">
+                            <el-tag>{{ scope.row.username }}</el-tag>
+                        </div>
+                    </el-popover>
+                </template>
             </el-table-column>
         </el-table>
 
         <el-radio v-model="isDisable" label="禁用">禁用</el-radio>
         <el-radio v-model="isDisable" label="选中且禁用">选中且禁用</el-radio>
-
-
         <el-upload
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
@@ -44,16 +69,27 @@
                 @click="openFullScreen"
                 v-loading.fullscreen.lock="fullscreenLoading">
             显示整页加载，3 秒后消失
+
+
+
         </el-button>
     </div>
 
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {
+        mapGetters,
+        mapActions
+    } from 'vuex'
+    import moment from 'moment'
+    import {formatterDate} from '../../store/util'
     export default {
+        created(){
+            this.getTableDisplayData()
+        },
         computed: {
-            ...mapGetters({
+            ...mapGetters('table/',{
                 tableData: 'tableDisplayData'
             }),
             isDisable: {
@@ -66,6 +102,11 @@
             }
         },
         methods: {
+
+            ...mapActions('table/',{
+                getTableDisplayData: 'getTableDisplayData'
+            }),
+            formatterDate,
             handleRemove(file,fileList) {
                 console.log(file,fileList)
             },
@@ -76,12 +117,12 @@
                 this.fullscreenLoading = true
                 setTimeout(() => {
                     this.fullscreenLoading = false
-                }, 1000)
+                },1000)
             }
         },
         data() {
             return {
-                fullscreenLoading:false,
+                fullscreenLoading: false,
                 fileList: [{
                     name: 'food.jpeg',
                     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'

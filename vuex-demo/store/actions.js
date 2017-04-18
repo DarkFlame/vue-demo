@@ -1,3 +1,5 @@
+
+
 import * as types from './mutation-types'
 
 export const addToCart = ({ commit }, product) => {
@@ -11,3 +13,4 @@ export const addToCart = ({ commit }, product) => {
 export const test = ({commit},id)=>{
     setTimeout(()=>commit(types.ACTION_TEST,id),1000)
 }
+
