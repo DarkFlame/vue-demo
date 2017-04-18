@@ -100,6 +100,11 @@ module.exports = {
         new ChunkManifestPlugin({
             filename: "chunk-manifest.json",
             manifestletiable: "webpackManifest"
-        })
+        }),
+        // new webpack.DefinePlugin({
+        //     'process.env': {
+        //         NODE_ENV: '"production"'
+        //     }
+        // })
     ]
 }

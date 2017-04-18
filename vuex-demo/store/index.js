@@ -6,6 +6,8 @@ import mutations from './mutations'
 import cart from './modules/cart'
 import login from './modules/login'
 import table from './modules/table'
+import chart from './modules/chart'
+import nav from './modules/nav'
 import segment from './modules/segment'
 import products from './modules/products'
 import createLogger from 'vuex/dist/logger'
@@ -21,6 +23,8 @@ const store =  new Vuex.Store({
         products,
         login,
         segment,
+        chart,
+        nav,
         table
     },
     mutations,

@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <el-menu theme="dark" default-active="1" :router="true" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu theme="dark" default-active="/tableNav/table" :router="true" class="el-menu-demo" mode="horizontal" @select="handleSelect">
 
             <el-submenu index="1">
                 <template slot="title">
@@ -13,7 +13,7 @@
             <el-menu-item index="/login">
                 登陆
             </el-menu-item>
-            <el-menu-item index="/TableIndex">
+            <el-menu-item index="/tableNav/table">
                 订单管理
             </el-menu-item>
         </el-menu>
@@ -23,7 +23,7 @@
 </template>
 <style lang="scss">
     body {
-        background-color: blueviolet;
+        /*background-color: blueviolet;*/
     }
 
     .el-menu-item {

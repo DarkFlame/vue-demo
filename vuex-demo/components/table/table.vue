@@ -97,7 +97,7 @@
                     return this.$store.state.table.isDisable
                 },
                 set(isDisable){
-                    this.$store.dispatch('setDisable',isDisable)
+                    this.$store.dispatch('table/setDisable',isDisable)
                 }
             }
         },

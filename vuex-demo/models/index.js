@@ -5,3 +5,4 @@ const firebaseApp = firebase.initializeApp(FirebaseConfig)
 const db = firebaseApp.database()
 export default db
 export let usersRef = db.ref('users')
+export let chartRef = db.ref('charts')
