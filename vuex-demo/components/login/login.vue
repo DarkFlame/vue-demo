@@ -35,6 +35,11 @@
     export default{
         created(){
             this.initUserTableData()
+            this.$http.get('https://www.easy-mock.com/mock/59015ba1875d7232a38b3b60/test/sunyue1992/test/1.0.0/api/v1/business/segment/%7BsegmentGroupId%7D/firstAndUploadList').then(response => {
+                console.log(response)
+            }, response => {
+                // error callback
+            })
         },
         data(){
             return {}

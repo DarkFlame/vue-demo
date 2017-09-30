@@ -8,6 +8,7 @@ import routes  from './routes'
 import { sync } from 'vuex-router-sync'
 import ElementUI from 'element-ui'
 import VueFire from 'vuefire'
+import VueResource  from 'vue-resource'
 import EChart from './common/ECharts.vue'
 import 'element-ui/lib/theme-default/index.css'
 import { currency } from './currency'
@@ -19,6 +20,7 @@ Vue.component('chart', EChart)
 Vue.use(VueRouter)
 Vue.use(ElementUI)
 Vue.use(VueFire)
+Vue.use(VueResource)
 
 const router = new VueRouter({
     // mode: 'history',

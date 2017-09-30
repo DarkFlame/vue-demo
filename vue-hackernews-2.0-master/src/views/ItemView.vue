@@ -16,7 +16,7 @@
       </div>
       <div class="item-view-comments">
         <p class="item-view-comments-header">
-          {{ item.kids ? item.descendants + ' comments' : 'No comments yet.'}}
+          {{ item.kids ? item.descendants + ' comments' : 'No comments yet.' }}
           <spinner :show="loading"></spinner>
         </p>
         <ul v-if="!loading" class="comment-children">
@@ -31,50 +31,59 @@
 import Spinner from '../components/Spinner.vue'
 import Comment from '../components/Comment.vue'
 
-function fetchItem (store) {
-  return store.dispatch('FETCH_ITEMS', {
-    ids: [store.state.route.params.id]
-  })
-}
-
-// recursively fetch all descendent comments
-function fetchComments (store, item) {
-  if (item.kids) {
-    return store.dispatch('FETCH_ITEMS', {
-      ids: item.kids
-    }).then(() => Promise.all(item.kids.map(id => {
-      return fetchComments(store, store.state.items[id])
-    })))
-  }
-}
-
-function fetchItemAndComments (store) {
-  return fetchItem(store).then(() => {
-    const { items, route } = store.state
-    return fetchComments(store, items[route.params.id])
-  })
-}
-
 export default {
   name: 'item-view',
   components: { Spinner, Comment },
-  data () {
-    return {
-      loading: true
-    }
-  },
+
+  data: () => ({
+    loading: true
+  }),
+
   computed: {
     item () {
       return this.$store.state.items[this.$route.params.id]
     }
   },
-  // on the server, only fetch the item itself
-  preFetch: fetchItem,
-  // on the client, fetch everything
+
+  // We only fetch the item itself before entering the view, because
+  // it might take a long time to load threads with hundreds of comments
+  // due to how the HN Firebase API works.
+  asyncData ({ store, route: { params: { id }}}) {
+    return store.dispatch('FETCH_ITEMS', { ids: [id] })
+  },
+
+  title () {
+    return this.item.title
+  },
+
+  // Fetch comments when mounted on the client
   beforeMount () {
-    fetchItemAndComments(this.$store).then(() => {
-      this.loading = false
-    })
+    this.fetchComments()
+  },
+
+  // refetch comments if item changed
+  watch: {
+    item: 'fetchComments'
+  },
+
+  methods: {
+    fetchComments () {
+      this.loading = true
+      fetchComments(this.$store, this.item).then(() => {
+        this.loading = false
+      })
+    }
+  }
+}
+
+// recursively fetch all descendent comments
+function fetchComments (store, item) {
+  if (item && item.kids) {
+    return store.dispatch('FETCH_ITEMS', {
+      ids: item.kids
+    }).then(() => Promise.all(item.kids.map(id => {
+      return fetchComments(store, store.state.items[id])
+    })))
   }
 }
 </script>
@@ -90,7 +99,7 @@ export default {
     margin 0
     margin-right .5em
   .host, .meta, .meta a
-    color #999
+    color #828282
   .meta a
     text-decoration underline
 
@@ -105,10 +114,8 @@ export default {
   padding 1em 0
   position relative
   .spinner
-    position absolute
-    top 0
-    right 0
-    bottom auto
+    display inline-block
+    margin -15px 0
 
 .comment-children
   list-style-type none
